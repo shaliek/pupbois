@@ -4,6 +4,7 @@ from os import walk
 from os import system
 from random import choice
 import RPi.GPIO as GPIO
+from time import sleep
 
 # GPIO INSTANTIATION
 GPIO.setmode(GPIO.BCM)
@@ -17,8 +18,12 @@ for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the
     break # Only need top level names for now
 
 # Callback
-def choose_play():
+def choose_play(pin):
     system("aplay ./Audio/"+choice(audio))
 
 # Listener
-GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play)
+GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play, bouncetime=200)
+
+while True:
+    print(MAGNET_GPIO)
+    sleep(1)
