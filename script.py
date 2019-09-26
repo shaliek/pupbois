@@ -23,11 +23,13 @@ for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the
 
 # Callback
 def choose_play(pin):
+    global ready_to_play
     if ready_to_play:
         system("aplay ./Audio/"+choice(audio))
         ready_to_play = False
 
 def ready_flag(pin):
+   global ready_to_play 
    ready_to_play = True
         
 # Listener
