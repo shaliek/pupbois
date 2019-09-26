@@ -9,6 +9,7 @@ from time import sleep
 # GPIO INSTANTIATION
 GPIO.setmode(GPIO.BCM)
 MAGNET_GPIO = 17
+MAGNET_GPIO_CLONE = 16
 GPIO.setup(MAGNET_GPIO, GPIO.IN) # GPIO Assign mode
 ###
 
@@ -30,7 +31,7 @@ def ready_flag(pin):
         
 # Listener
 GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play, bouncetime=200)
-GPIO.add_event_detect(MAGNET_GPIO, GPIO.RISING, callback=ready_flag, bouncetime=200)
+GPIO.add_event_detect(MAGNET_GPIO_CLONE, GPIO.FALLING, callback=ready_flag, bouncetime=200)
 
 while True:
     print(MAGNET_GPIO)
