@@ -11,6 +11,7 @@ GPIO.setmode(GPIO.BCM)
 MAGNET_GPIO = 17
 MAGNET_GPIO_CLONE = 27
 GPIO.setup(MAGNET_GPIO, GPIO.IN) # GPIO Assign mode
+GPIO.setup(MAGNET_GPIO_CLONE, GPIO.IN) # GPIO Clone Assign mode
 ###
 
 ready_to_play = True # Bool flag
