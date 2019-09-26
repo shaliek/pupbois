@@ -3,13 +3,22 @@
 from os import walk
 from os import system
 from random import choice
+import RPi.GPIO as GPIO
+
+# GPIO INSTANTIATION
+GPIO.setmode(GPIO.BCM)
+MAGNET_GPIO = 17
+GPIO.setup(MAGNET_GPIO, GPIO.IN) # GPIO Assign mode
+###
 
 audio = [] # List of audio file names from the audio directory
 for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the directory and populate the list
     audio.extend(filenames) # Populating the list
     break # Only need top level names for now
 
-system("aplay ./Audio/"+choice(audio))
+# Callback
+def choose_play():
+    system("aplay ./Audio/"+choice(audio))
 
-
-# Need an auto 
+# Listener
+GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play)
