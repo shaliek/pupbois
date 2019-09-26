@@ -12,6 +12,8 @@ MAGNET_GPIO = 17
 GPIO.setup(MAGNET_GPIO, GPIO.IN) # GPIO Assign mode
 ###
 
+ready_to_play = True # Bool flag
+
 audio = [] # List of audio file names from the audio directory
 for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the directory and populate the list
     audio.extend(filenames) # Populating the list
@@ -19,10 +21,16 @@ for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the
 
 # Callback
 def choose_play(pin):
-    system("aplay ./Audio/"+choice(audio))
+    if ready_to_play:
+        system("aplay ./Audio/"+choice(audio))
+        ready_to_play = False
 
+def ready_flag(pin):
+   ready_to_play = True
+        
 # Listener
 GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play, bouncetime=200)
+GPIO.add_event_detect(MAGNET_GPIO, GPIO.RISING, callback=)
 
 while True:
     print(MAGNET_GPIO)
