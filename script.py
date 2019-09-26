@@ -30,7 +30,7 @@ def ready_flag(pin):
         
 # Listener
 GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play, bouncetime=200)
-GPIO.add_event_detect(MAGNET_GPIO, GPIO.RISING, callback=)
+GPIO.add_event_detect(MAGNET_GPIO, GPIO.RISING, callback=ready_flag, bouncetime=200)
 
 while True:
     print(MAGNET_GPIO)
