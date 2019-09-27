@@ -17,7 +17,7 @@ GPIO.setup(MAGNET_GPIO_CLONE, GPIO.IN) # GPIO Clone Assign mode
 ready_to_play = True # Bool flag
 
 audio = [] # List of audio file names from the audio directory
-for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the directory and populate the list
+for (dirpath, dirnames, filenames) in walk('/home/pi/PupBois/Audio/'): # Read in names from the directory and populate the list
     audio.extend(filenames) # Populating the list
     break # Only need top level names for now
 
@@ -25,7 +25,7 @@ for (dirpath, dirnames, filenames) in walk('./Audio/'): # Read in names from the
 def choose_play(pin):
     global ready_to_play
     if ready_to_play:
-        system("aplay ./Audio/"+choice(audio))
+        system("aplay /home/pi/PupBois/Audio/"+choice(audio))
         ready_to_play = False
 
 def ready_flag(pin):
@@ -33,8 +33,8 @@ def ready_flag(pin):
    ready_to_play = True
         
 # Listener
-GPIO.add_event_detect(MAGNET_GPIO, GPIO.RISING, callback=choose_play, bouncetime=200)
-GPIO.add_event_detect(MAGNET_GPIO_CLONE, GPIO.RISING, callback=ready_flag, bouncetime=200)
+GPIO.add_event_detect(MAGNET_GPIO, GPIO.FALLING, callback=choose_play, bouncetime=200)
+GPIO.add_event_detect(MAGNET_GPIO_CLONE, GPIO.FALLING, callback=ready_flag, bouncetime=200)
 
 while True:
     print(MAGNET_GPIO)
